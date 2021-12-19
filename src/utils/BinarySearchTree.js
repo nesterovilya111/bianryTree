@@ -21,14 +21,14 @@ class Node {
         function searchTree(nodes) {
           //nodes equal this.root;
           // debugger;
-          if (data.number < nodes.data.number) {
+          if (data < nodes.data) {
             if (nodes.left === null) {
               nodes.left = new Node(data);
               return;
             } else if (nodes.data !== null) {
               return searchTree(nodes.left);
             }
-          } else if (data.number > nodes.data.number) {
+          } else if (data > nodes.data) {
             if (nodes.right === null) {
               nodes.right = new Node(data);
               return;

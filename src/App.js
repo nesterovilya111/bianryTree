@@ -4,63 +4,66 @@ import { v4 as uuidv4 } from 'uuid';
 
 const bst = new BinarySearchTree();
 
-function Tree(props) {
-  const { data } = props;
-  function onClick(num) {
-    alert(num);
-  }
-  function renderTree(node) {
-    return Object.entries(node).map(function ([key, value]) {
-      if (key === 'left' && typeof value === 'object') {
-        if (value !== null) {
-          return (
-            <li
-              key={value.data}
-              
-            >
-              <Tree data={value} />
-            </li>
-          );
-        }
-        if (value === null) {
-          return null;
-        }
-      } else if (key === 'right' && typeof value === 'object') {
-        if (value !== null) {
-          return (
-            <li key={value.data} >
-              <Tree data={value} />
-            </li>
-          );
-        }
-        if (value === null) {
-          return null;
-        }
-      }
-    });
-  }
 
-  return data ? (
-    <>
-    {console.log(data)}
-      <span className="tf-nc" onClick={() => {
-              onClick(data.data.id);
-            }}>{data.data.number}</span>
-      <ul>{renderTree(data)}</ul>
-    </>
-  ) : (
-    'EMPTY'
-  );
-}
 
 function App() {
+  function Tree(props) {
+    const { data } = props;
+    function onClick(num) {
+      console.log(props);
+      // alert(num);
+      props.del(num);
+    }
+    function renderTree(node) {
+      return Object.entries(node).map(function ([key, value]) {
+        if (key === 'left' && typeof value === 'object') {
+          if (value !== null) {
+            return (
+              <li
+                key={value.data}
+                
+              >
+                <Tree data={value} />
+              </li>
+            );
+          }
+          if (value === null) {
+            return null;
+          }
+        } else if (key === 'right' && typeof value === 'object') {
+          if (value !== null) {
+            return (
+              <li key={value.data} >
+                <Tree data={value} />
+              </li>
+            );
+          }
+          if (value === null) {
+            return null;
+          }
+        }
+      });
+    }
+  
+    return data ? (
+      <>
+      {console.log(data)}
+        <span className="tf-nc" onClick={() => {
+                onClick(data.data);
+              }}>{data.data}</span>
+        <ul>{renderTree(data)}</ul>
+      </>
+    ) : (
+      'EMPTY'
+    );
+  }
   const [number, setNumber] = React.useState(50);
   const [root, setRoot] = React.useState(null);
 
   React.useEffect(() => {
-    _addNumber(1);
-    _addNumber(2);
-    _addNumber(0);
+    _addNumber(3);
+    _addNumber(5);
+    _addNumber(11);
     // bst.add({number:1, id:"1"});
     // bst.add({number:2, id:"12"});
     // bst.add(45);
@@ -89,9 +92,9 @@ function App() {
     _addNumber(number);
   }
   function _addNumber(_number){
-    const id = uuidv4();
+    // const id = uuidv4();
 
-    bst.add({number:_number, id});
+    bst.add(_number);
     setRoot((prev) => ({ ...prev, ...bst.root }))
   }
   function removeNumber(e) {
@@ -99,7 +102,10 @@ function App() {
     bst.remove(number);
     setRoot((prev) => ({ ...prev, ...bst.root }));
   }
-
+  function _removeNumber(_number) {
+    bst.remove(_number);
+    setRoot((prev) => ({ ...prev, ...bst.root }));
+  }
   function findMax() {
     alert(`Max value is ${bst.findMax()}`);
   }
@@ -132,7 +138,7 @@ function App() {
       <div className="tf-tree tf-custom">
         <ul>
           <li>
-            <Tree data={root} parent={bst.root} />
+            <Tree data={root} parent={bst.root} del={_removeNumber}/>
           </li>
         </ul>
       </div>
