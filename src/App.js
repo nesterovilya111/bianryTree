@@ -15,9 +15,7 @@ function Tree(props) {
           return (
             <li
               key={value.data}
-              onClick={() => {
-                onClick(value.data);
-              }}
+              
             >
               <Tree data={value} />
             </li>
@@ -29,7 +27,7 @@ function Tree(props) {
       } else if (key === 'right' && typeof value === 'object') {
         if (value !== null) {
           return (
-            <li key={value.data}>
+            <li key={value.data} >
               <Tree data={value} />
             </li>
           );
@@ -43,7 +41,9 @@ function Tree(props) {
 
   return data ? (
     <>
-      <span className="tf-nc">{data.data}</span>
+      <span className="tf-nc" onClick={() => {
+              onClick(data.data);
+            }}>{data.data}</span>
       <ul>{renderTree(data)}</ul>
     </>
   ) : (
