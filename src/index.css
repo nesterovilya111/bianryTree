@@ -11,6 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+.animate{
+  height:100px;
+  -webkit-animation-name: animation;
+  -webkit-animation-duration: 5s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;    
+  -webkit-animation-play-state: running;
+  
+  animation-name: animation;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;    
+  animation-play-state: running;
+  background-color: #f00;
+}
+
+@-webkit-keyframes animation {
+  0%     {background-color:red;}
+  50.0%  {background-color:#ff6666;}
+  100.0%  {background-color:red;}
+}
+
+@keyframes animation {
+  0%     {background-color:red;}
+  50.0%  {background-color:blue;}
+  100.0%  {background-color:red;}
+}
 span{
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

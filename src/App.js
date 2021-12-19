@@ -1,9 +1,8 @@
 import React from 'react';
 import { BinarySearchTree } from './utils/BinarySearchTree';
-import { v4 as uuidv4 } from 'uuid';
 
 const bst = new BinarySearchTree();
-
+var lastAdd = -1;
 
 
 function App() {
@@ -11,7 +10,6 @@ function App() {
     const { data } = props;
     function onClick(num) {
       console.log(props);
-      // alert(num);
       props.del(num);
     }
     function renderTree(node) {
@@ -23,7 +21,7 @@ function App() {
                 key={value.data}
                 
               >
-                <Tree data={value} />
+                <Tree data={value} del={props.del} />
               </li>
             );
           }
@@ -34,7 +32,7 @@ function App() {
           if (value !== null) {
             return (
               <li key={value.data} >
-                <Tree data={value} />
+                <Tree data={value}  del={props.del}/>
               </li>
             );
           }
@@ -48,7 +46,7 @@ function App() {
     return data ? (
       <>
       {console.log(data)}
-        <span className="tf-nc" onClick={() => {
+        <span className={(data.data == lastAdd)?"tf-nc animate":"tf-nc"}  onClick={() => {
                 onClick(data.data);
               }}>{data.data}</span>
         <ul>{renderTree(data)}</ul>
@@ -63,23 +61,8 @@ function App() {
   React.useEffect(() => {
     _addNumber(3);
     _addNumber(5);
-    _addNumber(11);
-    // bst.add({number:1, id:"1"});
-    // bst.add({number:2, id:"12"});
-    // bst.add(45);
-    // bst.add(55);
-    // bst.add(53);
-    // bst.add(54);
-    // bst.add(51);
-    // bst.add(40);
-    // bst.add(48);
-    // bst.add(60);
-    // bst.add(30);
-    // bst.add(80);
-    // bst.add(10);
-    // bst.add(42);
-    // bst.add(32);
-    // bst.add(58);
+    _addNumber(2);
+    lastAdd = -1;
     setRoot((prev) => ({ ...prev, ...bst.root }));
   }, []);
 
@@ -92,8 +75,7 @@ function App() {
     _addNumber(number);
   }
   function _addNumber(_number){
-    // const id = uuidv4();
-
+    lastAdd = _number;
     bst.add(_number);
     setRoot((prev) => ({ ...prev, ...bst.root }))
   }
@@ -117,23 +99,18 @@ function App() {
   return (
     <div className="container">
       <h1>Binary Search Tree Visualization</h1>
+      <h4 style={{margin:"5px"}}>You can delete node by clicking it!</h4>
       <form onSubmit={addNumber} className="form-control">
         <input type="number" min="1" name="add" onChange={changeNumber} required />
         <button type="submit" className="input-button">
           Add
         </button>
-        {/* <button type="button" onClick={findMax} className="find-max-button">
-          Find Max
-        </button> */}
       </form>
       <form onSubmit={removeNumber} className="form-control">
         <input type="number" min="1" name="remove" onChange={changeNumber} required />
         <button type="submit" className="input-button">
           Remove
         </button>
-        {/* <button type="button" onClick={findMin} className="find-min-button">
-          Find Min
-        </button> */}
       </form>
       <div className="tf-tree tf-custom">
         <ul>
