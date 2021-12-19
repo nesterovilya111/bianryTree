@@ -88,13 +88,7 @@ function App() {
     bst.remove(_number);
     setRoot((prev) => ({ ...prev, ...bst.root }));
   }
-  function findMax() {
-    alert(`Max value is ${bst.findMax()}`);
-  }
 
-  function findMin() {
-    alert(`Mim value is ${bst.findMin()}`);
-  }
 
   return (
     <div className="container">
@@ -106,12 +100,7 @@ function App() {
           Add
         </button>
       </form>
-      <form onSubmit={removeNumber} className="form-control">
-        <input type="number" min="1" name="remove" onChange={changeNumber} required />
-        <button type="submit" className="input-button">
-          Remove
-        </button>
-      </form>
+ 
       <div className="tf-tree tf-custom">
         <ul>
           <li>
